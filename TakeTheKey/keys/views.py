@@ -17,10 +17,10 @@ def activate (request):
 def feedback (request):
     return render(request, "feedback.html")
 
-def login (request):
-    return render(request, "login.html")
+# def login (request):
+#     return render(request, "login.html")
 
-def package_activation (request):
+def package_activation(request):
     return render(request, "package_activation.html")
 
 
@@ -38,7 +38,7 @@ def package_activation (request):
 
 class RegisterUser(DataMixin, CreateView):
     form_class = UserCreationForm
-    template_name = 'keys/register.html'
+    template_name = 'register.html'
     success_url = reverse_lazy('login')
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -48,12 +48,12 @@ class RegisterUser(DataMixin, CreateView):
 
 class LoginUser(DataMixin, LoginView):
     form_class = AuthenticationForm
-    template_name = 'keys/login.html'
+    template_name = 'login.html'
 
     def get_context_data(self, *,object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title="Авторизация")
         return dict(list(context.items())+list(c_def.items()))
 
-    def get_success_url(self):
-        return reverse_lazy('package_activation')
+    # def get_success_url(self):
+    #     return reverse_lazy('package_activation')

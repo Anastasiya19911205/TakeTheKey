@@ -6,7 +6,7 @@
 
 <h1>{{title}}</h1>
 
-<form action="{% url 'login' %}" method="post">
+<form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Войти</button>
