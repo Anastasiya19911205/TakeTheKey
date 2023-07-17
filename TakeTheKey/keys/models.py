@@ -14,8 +14,8 @@ class Users(models.Model):
 
 class Windows(models.Model):
     name_windows = models.CharField(max_length=30)
-    code_windows = models.CharField(max_length=30,unique=True)
-    license_windows = models.CharField(max_length=30,unique=True)
+    code_windows = models.CharField(max_length=30, unique=True)
+    license_windows = models.CharField(max_length=30, unique=True)
     user = models.ManyToManyField("Users")
 
     class Meta:
@@ -26,8 +26,8 @@ class Windows(models.Model):
 
 class Ivi(models.Model):
     name_ivi = models.CharField(max_length=30)
-    code_ivi = models.CharField(max_length=30,unique=True)
-    license_ivi = models.CharField(max_length=30,unique=True)
+    code_ivi = models.CharField(max_length=30, unique=True)
+    license_ivi = models.CharField(max_length=30, unique=True)
     user = models.ManyToManyField("Users")
 
     class Meta:
