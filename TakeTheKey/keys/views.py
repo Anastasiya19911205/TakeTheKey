@@ -1,10 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth import logout
+
+
+from .forms import LoginUserForm
 from .utils import *
 
 
@@ -47,7 +51,7 @@ class RegisterUser(DataMixin, CreateView):
         return dict(list(context.items())+list(c_def.items()))
 
 class LoginUser(DataMixin, LoginView):
-    form_class = AuthenticationForm
+    form_class = LoginUserForm
     template_name = 'login.html'
 
     def get_context_data(self, *,object_list=None, **kwargs):
@@ -57,3 +61,8 @@ class LoginUser(DataMixin, LoginView):
 
     def get_success_url(self):
         return reverse_lazy('package_activation')
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')

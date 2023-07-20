@@ -1,7 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-<!--    <li class="last"></li><a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Войти</a></li>-->
-    <a class="navbar-brand" href="{% url 'login' %}">Вход</a>
+      {% if request.user.is_authenticated %}
+      <li class="last"> {{user.username}} | <a href="{% url 'logout' %}">Выйти</a></li>
+      {% else %}
+<!--      <li class="last"></li><a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Войти</a></li>-->
+      <a class="navbar-brand" href="{% url 'login' %}">Вход</a>
+      {% endif %}
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -10,7 +14,8 @@
           <a class="nav-link active" aria-current="page" href="#">Home</a>
           <a class="nav-link" href="{% url 'activate' %}">Как активировать</a>
           <a class="nav-link" href="{% url 'feedback' %}">Обратная связь</a>
-          <a class="nav-link" href="{% url 'package_activation' %}">активация</a>
+<!--          <a class="nav-link" href="{% url 'package_activation' %}">активация</a>-->
       </ul>
     </div>
   </div>
+</nav>
