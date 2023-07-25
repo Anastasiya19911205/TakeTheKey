@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from .views import *
+from keys import views
 
 urlpatterns = [
     path('enter/', enter, name="enter"),
@@ -10,6 +11,7 @@ urlpatterns = [
     path('logout/', logout_user, name="logout"),
     path('register/', RegisterUser.as_view(), name="register"),
     path('package_activation/', package_activation, name="package_activation"),
+
 
 
 ]

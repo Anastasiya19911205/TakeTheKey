@@ -5,6 +5,29 @@
 
 {% block content %}
 
+<body>
+    <form method="POST" action="create/">
+        {% csrf_token %}
+        <p>
+            <label>Введите имя</label><br>
+            <input type="text" name="name" />
+        </p>
 
+        <input type="submit" value="Сохранить" >
+    </form>
+
+    <table>
+
+        {% for code in codes %}
+        <tr>
+            <td>{{ code.name_ivi }}</td>
+            <td>{{ code.code_ivi }}</td>
+            <td>{{ code.license_ivi}}</td>
+
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
 
 {% endblock  %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
@@ -10,6 +10,7 @@ from django.contrib.auth import logout
 
 from .forms import LoginUserForm
 from .utils import *
+from .models import *
 
 
 def enter(request):
@@ -66,3 +67,59 @@ class LoginUser(DataMixin, LoginView):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+
+class IviForm:
+    def is_valid(self):
+        pass
+
+    def save(self):
+        pass
+
+
+# def package(request):
+#     codes = Ivi.objects.all()
+#     if request.method == "POST":
+#         form_code_ivi = IviForm(request.POST)
+#         if form_code_ivi.is_valid():
+#             form_code_ivi.save()
+#             return HttpResponseRedirect('/')
+#
+#     else:
+#         form_code_ivi = IviForm()
+#
+#
+#
+#     # grap all TodoItems from database:
+#
+#
+#     # grap all TodoLists (titles) from database:
+#     # code = TodoList.objects.all()
+#
+#     return render(request, 'package_activation.html',
+#                   {
+#                       'form_code_ivi': form_code_ivi,
+#                       'codes':codes
+#                   })
+# def index(request):
+#     codes = Ivi.objects.all()
+#     return render(request, "feedback.html", {"codes": codes})
+
+# получение данных из бд
+def index(request):
+    code = Ivi.objects.all()
+    return redirect ("feedback.html")
+
+
+# сохранение данных в бд
+def create(request):
+    if request.method == "POST":
+        code = Code()
+        code.name_ivi = request.POST.get("name")
+        code.code_ivi = request.POST.get("code")
+        code.license_ivi = request.POST.get("license")
+        code.save()
+    # return HttpResponseRedirect("/")
+
+
+
