@@ -8,14 +8,17 @@ from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth import logout
 
 
-from .forms import LoginUserForm
+from .forms import LoginUserForm, IviForm
 from .utils import *
 from .models import *
+
 
 
 def enter(request):
     return render(request, "enter.html")
 
+def home(request):
+    return render(request, "home.html")
 def activate (request):
     return render(request, "activate.html")
 
@@ -61,20 +64,35 @@ class LoginUser(DataMixin, LoginView):
         return dict(list(context.items())+list(c_def.items()))
 
     def get_success_url(self):
-        return reverse_lazy('package_activation')
+        return reverse_lazy('feedback')
 
 
 def logout_user(request):
     logout(request)
     return redirect('login')
 
+def feedback(request):
+    codes = Ivi.objects.all()
+    context = {}
+    if request.method == 'POST':
+        form = IviForm(request.POST)
+        context["form"] = form
+        if form.is_valid():
+            # form_codes.save()
+            # return redirect("home")
+            print(request.POST['name_ivi'],request.POST['license_ivi'])
 
-class IviForm:
-    def is_valid(self):
-        pass
+    else:
+        form = IviForm()
+        context["form"] = form
 
-    def save(self):
-        pass
+    # context = {
+    #     "form": form,
+    #     "codes":codes
+    # }
+    return render(request, "feedback.html", context=context)
+
+
 
 
 # def package(request):
@@ -106,20 +124,12 @@ class IviForm:
 #     return render(request, "feedback.html", {"codes": codes})
 
 # получение данных из бд
-def index(request):
-    code = Ivi.objects.all()
-    return redirect ("feedback.html")
+# def index(request):
+#     ivi = Ivi.objects.all()
+#     return render(request, "feedback.html", {'ivi': ivi})
 
 
-# сохранение данных в бд
-def create(request):
-    if request.method == "POST":
-        code = Code()
-        code.name_ivi = request.POST.get("name")
-        code.code_ivi = request.POST.get("code")
-        code.license_ivi = request.POST.get("license")
-        code.save()
-    # return HttpResponseRedirect("/")
+
 
 
 
