@@ -1,3 +1,5 @@
+from time import sleep
+from django.core.cache import cache
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -73,14 +75,20 @@ def logout_user(request):
 
 def feedback(request):
     codes = Ivi.objects.all()
+    print (request.method)
     context = {}
     if request.method == 'POST':
         form = IviForm(request.POST)
         context["form"] = form
         if form.is_valid():
             # form_codes.save()
-            # return redirect("home")
-            print(request.POST['name_ivi'],request.POST['license_ivi'])
+            code_ivi= request.POST['code_ivi']
+            code=Ivi.objects.get(code_ivi=code_ivi)
+            print(code.name_ivi, code.license_ivi)
+            # cache.clear()
+            return redirect("home")
+
+
 
     else:
         form = IviForm()
