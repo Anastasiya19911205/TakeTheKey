@@ -12,7 +12,6 @@ COPY . .
 
 RUN cd TakeTheKey
 
-CMD ['python', 'manage.py', 'runserver']
 #
 #
 # FROM python:3.10-alpine

@@ -5,22 +5,33 @@ class DataMixin:
 		context = kwargs
 		return context
 
+
+class PlaceQueue:
+    pass
+
+
 class Queue:
+
     FIFO = "FIFO"
     LIFO = "LIFO"
-    STRATEGIES = [FIFO, LIFO]
-    def __int__(self,strategy):
+    STRATEGIES = [FIFO] #, LIFO]
+    def __init__(self,strategy):
         if strategy not in self.STRATEGIES:
-            raise ValueError(f'{strategy} not in supported strategies:{self.strategy}')
+            raise ValueError(f'{strategy} not in supported strategies:{self.STRATEGIES}')
 
         self.storage = []
         self.strategy = strategy
 
     def add(self, value):
-        if self.strategy == self.FIFO:
-            self.storage.insert(0,value)
-        elif self.strategy == self.LIFO:
-            self.storage.append(value)
+        PlaceQueue.objects.create(value=value)
     def pop(self):
-        return self.storage.pop()
+        val = None
+        if self.strategy == self.FIFO:
+            val = PlaceQueue.objects.order_by("id").first()
 
+        elif self.strategy == self.LIFO:
+            val = PlaceQueue.objects.order_by("id").last()
+        if val:
+            val.delete()
+            return val.value
+        return None
